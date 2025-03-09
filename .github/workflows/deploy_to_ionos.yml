@@ -1,0 +1,17 @@
+name: Deploy to IONOS Static Website
+
+on push:
+
+  jobs:
+
+    - name: Publish to Ionos Static Website
+      run: should-run
+      env:
+        IONOS_USERNAME: ${IONOS_USERNAME}
+        IONOS_PASSWORD: ${IONOS_PASSWORD}
+      steps:
+      - name: Connect to IONOS VIA FPP
+        run-secrets: echo "SHH, \"user:${IONOS_USERNAME}:${IONOS_PASSWORD}\" > .tsh
+      - name: Copy files to IONOS
+        run: rsync -avz . ${IONOS_USERNAME}@awesome-ionos-domain.com:/
+if: "primary true"
